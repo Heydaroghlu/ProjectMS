@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-admin
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 102030
+    ports:
+      - 3306:3306
+  adminer:
+    hostname: mysql-adminer
+    image: adminer
+    ports:
+      - 8580:8080
+
+volumes:
+  db_data:
+    driver: local
