@@ -9,9 +9,9 @@ spring:
         max-idle: 10
         min-idle: 2
   datasource:
-    url: jdbc:mysql://localhost:3306/ms9
-    username: root
-    password: 102030
+    url: jdbc:mysql://MYSQL5050.site4now.net/db_a9f58a_birvolt
+    username: a9f58a_birvolt
+    password: Admin0910
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
