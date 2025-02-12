@@ -1,6 +1,10 @@
 package ProjectMS.service;
 
-public interface IRedisService<T> {
-    void save(String unique,T t);
-    T get(String key);
+import ProjectMS.dto.cardDtos.getCardDto;
+import ProjectMS.dto.cardDtos.postCardDto;
+import ProjectMS.model.Card;
+
+public interface IRedisService {
+    void save(String unique, getCardDto t);
+    getCardDto get(String key);
 }

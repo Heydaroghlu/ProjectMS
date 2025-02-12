@@ -7,6 +7,7 @@ import ProjectMS.model.Card;
 import ProjectMS.repository.CardRepository;
 import ProjectMS.service.ICardService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CardService implements ICardService {
     private final CardRepository cardRepository;
+    private final RedisService redisService;
+    private final ModelMapper mapper;
     @Override
     public List<getCardDto> getCards() {
         List<Card> cards = cardRepository.findByDeletedFalse();
@@ -28,7 +31,9 @@ public class CardService implements ICardService {
 
     @Override
     public getCardDto addCard(postCardDto card) {
-        return null;
+        Card card1=cardRepository.save(mapper.map(card, Card.class));
+        redisService.save("Card-",mapper.map(card1,getCardDto.class));
+        return mapper.map(card1,getCardDto.class);
     }
 
     @Override

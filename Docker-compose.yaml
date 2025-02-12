@@ -14,6 +14,14 @@ services:
     image: adminer
     ports:
       - 8580:8080
+  redis:
+    image: redis
+    container_name: redis
+    environment:
+      - REDIS_PASSWORD=ProjectMS   # Burada şifrəni müəyyən edirik
+    command: [ "redis-server", "--requirepass", "ProjectMS" ]  # Şifrəni Redis serverinə əlavə edirik
+    ports:
+      - 6379:6379
 
 volumes:
   db_data:
