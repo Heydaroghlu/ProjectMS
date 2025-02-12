@@ -12,4 +12,5 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    boolean deleted;
 }

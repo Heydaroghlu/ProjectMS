@@ -33,7 +33,10 @@ public class ReclamService implements IReclamService {
 
     @Override
     public reclamGetDto getReclamById(int id) {
-        return mapper.map(reclamRepository.findById(id),reclamGetDto.class);
+        var rea=reclamRepository.findByDeletedFalse();
+        if(rea==null)
+            return null;
+        return mapper.map(rea,reclamGetDto.class);
     }
 
     @Override
@@ -45,9 +48,10 @@ public class ReclamService implements IReclamService {
     public reclamGetDto updateReclam(reclamPutDto reclam) {
         Reclam exist=reclamRepository.findById(reclam.getId()).orElse(null);
         if(exist!=null){
-            reclam.setName(reclam.getName());
-            reclam.setDescription(reclam.getDescription());
+            exist.setName(reclam.getName());
+            exist.setDescription(reclam.getDescription());
         }
+        reclamRepository.save(exist);
         return mapper.map(reclam,reclamGetDto.class);
     }
 
