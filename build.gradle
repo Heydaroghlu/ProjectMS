@@ -1,11 +1,7 @@
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
-import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.2'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'com.bmuschko.docker-remote-api' version '7.0.0'  // Docker plugin
 
 }
 
@@ -25,8 +21,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.bmuschko:gradle-docker-plugin:7.0.0'
 	compileOnly 'org.projectlombok:lombok'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.4.2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.2'
@@ -35,7 +31,6 @@ dependencies {
 }
 
 //docker
-
 
 
 tasks.named('test') {
