@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
+import java.util.Date;
+
 @MappedSuperclass
 @Data
 public class BaseEntity {
@@ -13,4 +15,5 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     boolean deleted;
+    Date createdAt;
 }

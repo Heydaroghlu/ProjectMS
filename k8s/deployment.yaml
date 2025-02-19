@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: projectms-app
+  name: projectms
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: projectms-app
+      app: projectms
   template:
     metadata:
       labels:
-        app: projectms-app
+        app: projectms
     spec:
       containers:
         - name: projectms
-          image: example-image
+          image: heydaroghlu710/projectms:v1
           ports:
             - containerPort: 8088
