@@ -3,15 +3,20 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: "ProjectMS"
+      password: "102030"
       timeout: 2000
       pool:
         max-idle: 10
         min-idle: 2
+    kafka:
+      bootstrap-servers: kafka:9092
+      producer:
+        acks: all
+        retries: 3
   datasource:
-    url: jdbc:mysql://MYSQL5050.site4now.net/db_a9f58a_birvolt
-    username: a9f58a_birvolt
-    password: Admin0910
+    url: jdbc:mysql://95.111.238.99/birvolt555
+    username: root
+    password: 102030
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
@@ -24,4 +29,4 @@ spring:
 
 
 server:
-  port: 8080
+  port: 8088

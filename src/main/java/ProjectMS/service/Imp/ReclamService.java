@@ -4,6 +4,7 @@ import ProjectMS.dto.reclamDtos.reclamGetDto;
 import ProjectMS.dto.reclamDtos.reclamPostDto;
 import ProjectMS.dto.reclamDtos.reclamPutDto;
 import ProjectMS.model.Reclam;
+import ProjectMS.redis.ReclamRedisRepository;
 import ProjectMS.repository.ReclamRepository;
 import ProjectMS.service.IReclamService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReclamService implements IReclamService {
     private final ReclamRepository reclamRepository;
+    private final ReclamRedisRepository reclamRedisRepository;
     private final ModelMapper mapper;
     @Override
     public List<reclamGetDto> getAllReclam() {
@@ -33,7 +35,12 @@ public class ReclamService implements IReclamService {
 
     @Override
     public reclamGetDto getReclamById(int id) {
-        var rea=reclamRepository.findByDeletedFalse();
+        var redis=reclamRedisRepository.getById("Reclam"+id);
+        if(redis!=null)
+        {
+            return mapper.map(redis,reclamGetDto.class);
+        }
+        var rea=reclamRepository.findById(id);
         if(rea==null)
             return null;
         return mapper.map(rea,reclamGetDto.class);
@@ -41,7 +48,9 @@ public class ReclamService implements IReclamService {
 
     @Override
     public reclamGetDto saveReclam(reclamPostDto reclam) {
-        return mapper.map(reclamRepository.save(mapper.map(reclam,Reclam.class)),reclamGetDto.class);
+        Reclam reclam1=reclamRepository.save(mapper.map(reclam,Reclam.class));
+        reclamRedisRepository.save("Reclam"+reclam1.getId(),reclam1);
+        return mapper.map(reclam1,reclamGetDto.class);
     }
 
     @Override

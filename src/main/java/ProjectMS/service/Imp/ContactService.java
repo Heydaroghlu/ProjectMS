@@ -2,15 +2,19 @@ package ProjectMS.service.Imp;
 
 import ProjectMS.dto.contactDtos.getContactDto;
 import ProjectMS.dto.contactDtos.postContactDto;
+import ProjectMS.dto.reclamDtos.reclamGetDto;
 import ProjectMS.model.Contact;
+import ProjectMS.model.Reclam;
 import ProjectMS.repository.ContactRepository;
 import ProjectMS.service.IContactService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,11 +53,18 @@ public class ContactService implements IContactService {
 
     @Override
     public List<getContactDto> getAllContacts() {
-        return List.of();
+        List<Contact> contactList = contactRepository.findAll();
+        if(contactList.isEmpty())
+        {
+            return new ArrayList<>();
+        }
+        List<getContactDto> reclamGetDtoList = contactList.stream().map(reclam -> mapper.map(reclam,getContactDto.class))
+                .collect(Collectors.toList());
+        return reclamGetDtoList;
     }
 
     @Override
     public getContactDto addContact(postContactDto contact) {
-        return null;
+        return mapper.map(contactRepository.save(mapper.map(contact,Contact.class)), getContactDto.class);
     }
 }

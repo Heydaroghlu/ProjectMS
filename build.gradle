@@ -24,10 +24,18 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.4.2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
+	implementation 'org.springframework.kafka:spring-kafka'
+
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.2'
+	//securyt
+	implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '10.0.2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
 //docker
