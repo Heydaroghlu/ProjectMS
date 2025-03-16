@@ -9,10 +9,14 @@ spring:
         max-idle: 10
         min-idle: 2
     kafka:
-      bootstrap-servers: kafka:9092
+      bootstrap-servers: localhost:9092  # Kafka broker URL
+      consumer:
+        group-id: my-group  # Group ID təyin et
+        auto-offset-reset: earliest  # İlk mesajdan başlayacaq
       producer:
-        acks: all
-        retries: 3
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
   datasource:
     url: jdbc:mysql://95.111.238.99/birvolt555
     username: root

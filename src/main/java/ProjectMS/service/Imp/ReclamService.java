@@ -1,5 +1,6 @@
 package ProjectMS.service.Imp;
 
+import ProjectMS.config.kafka.KafkaProducer;
 import ProjectMS.dto.reclamDtos.reclamGetDto;
 import ProjectMS.dto.reclamDtos.reclamPostDto;
 import ProjectMS.dto.reclamDtos.reclamPutDto;
@@ -7,7 +8,10 @@ import ProjectMS.model.Reclam;
 import ProjectMS.redis.ReclamRedisRepository;
 import ProjectMS.repository.ReclamRepository;
 import ProjectMS.service.IReclamService;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.core.util.Json;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.common.protocol.types.Field;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReclamService implements IReclamService {
     private final ReclamRepository reclamRepository;
+    private final KafkaProducer kafkaProducer;
     private final ReclamRedisRepository reclamRedisRepository;
     private final ModelMapper mapper;
     @Override
@@ -49,7 +54,9 @@ public class ReclamService implements IReclamService {
     @Override
     public reclamGetDto saveReclam(reclamPostDto reclam) {
         Reclam reclam1=reclamRepository.save(mapper.map(reclam,Reclam.class));
-        reclamRedisRepository.save("Reclam"+reclam1.getId(),reclam1);
+        String message= mapper.map(reclam1, String.class);
+        kafkaProducer.sendMessage(message);
+        //reclamRedisRepository.save("Reclam"+reclam1.getId(),reclam1);
         return mapper.map(reclam1,reclamGetDto.class);
     }
 
