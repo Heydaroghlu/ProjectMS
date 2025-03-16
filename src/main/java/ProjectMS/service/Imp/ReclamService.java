@@ -40,11 +40,11 @@ public class ReclamService implements IReclamService {
 
     @Override
     public reclamGetDto getReclamById(int id) {
-        var redis=reclamRedisRepository.getById("Reclam"+id);
-        if(redis!=null)
-        {
-            return mapper.map(redis,reclamGetDto.class);
-        }
+       // var redis=reclamRedisRepository.getById("Reclam"+id);
+       // if(redis!=null)
+       // {
+       //     return mapper.map(redis,reclamGetDto.class);
+       // }
         var rea=reclamRepository.findById(id);
         if(rea==null)
             return null;

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +24,12 @@ public class ReclamController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<reclamGetDto> getReclamById(@PathVariable int id) {
-        return ResponseEntity.ok(reclamService.getReclamById(id));
+        reclamGetDto reclam=reclamService.getReclamById(id);
+        if (reclam!=null) {
+            return ResponseEntity.ok(reclam);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     @PostMapping("/create")
     public ResponseEntity<reclamGetDto> createReclam(@RequestBody reclamPostDto reclam) {
